@@ -1,16 +1,17 @@
 ---
-title: Switch
-description: A control that allows the user to toggle between checked and not checked.
+title: switch
+description: A control that allows the user to toggle between checked and not checked. On error, reverts to the original state and alerts the user.
 component: true
-source: https://github.com/huntabyte/shadcn-svelte/tree/main/sites/docs/src/lib/registry/default/ui/switch
+source: https://github.com/vokerai/actions-ui/tree/main/sites/docs/src/lib/registry/default/ui/loading-switch
+basedOn: https://www.shadcn-svelte.com/docs/components/switch
 bits: https://www.bits-ui.com/docs/components/switch
 ---
 
 <script>
-  import { ComponentPreview, ManualInstall, PMAddComp, PMInstall } from '$lib/components/docs';
+    import { ComponentPreview, ManualInstall, PMAddComp, PMInstall } from '$lib/components/docs'
 </script>
 
-<ComponentPreview name="switch-demo">
+<ComponentPreview name="switch-error">
 
 <div />
 
@@ -34,17 +35,34 @@ bits: https://www.bits-ui.com/docs/components/switch
 
 ```svelte
 <script lang="ts">
-  import { Switch } from "$lib/components/ui/switch";
+    import * as LoadingLoadingSwitch from '$lib/components/actions-ui/loading-switch';
 </script>
 
-<Switch />
+<LoadingSwitch.Root>
+    <LoadingSwitch.Trigger class="w-[180px]">
+        <LoadingSwitch.Value placeholder="Theme" />
+    </LoadingSwitch.Trigger>
+    <LoadingSwitch.Content>
+        <LoadingSwitch.Item value="light">Light</LoadingSwitch.Item>
+        <LoadingSwitch.Item value="dark">Dark</LoadingSwitch.Item>
+        <LoadingSwitch.Item value="system">System</LoadingSwitch.Item>
+    </LoadingSwitch.Content>
+</LoadingSwitch.Root>
 ```
 
 ## Examples
 
-### Form
+### Success
 
-<ComponentPreview name="switch-form">
+<ComponentPreview name="switch-success">
+
+<div />
+
+</ComponentPreview>
+
+### Error
+
+<ComponentPreview name="switch-error">
 
 <div />
 

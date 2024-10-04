@@ -19,7 +19,7 @@ We use it to understand how your project is set up and how to generate component
 
 You can create a `components.json` file in your project by running the following command:
 
-<PMExecute command="shadcn-svelte@latest init" />
+<PMExecute command="actions-ui@latest init" />
 
 See the [CLI section](/docs/cli) for more information.
 
@@ -29,7 +29,7 @@ You can see the JSON Schema for `components.json` [here](https://shadcn-svelte.c
 
 ```json title="components.json"
 {
-  "$schema": "https://shadcn-svelte.com/schema.json"
+    "$schema": "https://shadcn-svelte.com/schema.json"
 }
 ```
 
@@ -73,9 +73,9 @@ Path to the CSS file that imports Tailwind CSS into your project.
 
 ```json title="components.json"
 {
-  "tailwind": {
-    "css": "src/app.{p,post}css"
-  }
+    "tailwind": {
+        "css": "src/app.{p,post}css"
+    }
 }
 ```
 
@@ -103,9 +103,9 @@ Import alias for your utility functions.
 
 ```json title="components.json"
 {
-  "aliases": {
-    "utils": "$lib/utils.js"
-  }
+    "aliases": {
+        "utils": "$lib/utils.js"
+    }
 }
 ```
 
@@ -115,9 +115,9 @@ Import alias for your components.
 
 ```json title="components.json"
 {
-  "aliases": {
-    "components": "$lib/components"
-  }
+    "aliases": {
+        "components": "$lib/components"
+    }
 }
 ```
 

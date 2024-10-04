@@ -40,4 +40,4 @@ Visit https://shadcn-svelte.com to view the documentation.
 
 ## License
 
-Licensed under the [MIT license](https://github.com/huntabyte/shadcn-svelte/blob/main/LICENSE.md).
+Licensed under the [MIT license](https://github.com/vokerai/actions-ui/blob/main/LICENSE.md).

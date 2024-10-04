@@ -1,5 +1,6 @@
 MIT License
 
+Copyright (c) 2024 Invoke Labs, Inc. <https://github.com/vokerai>
 Copyright (c) 2023 Hunter Johnston <https://github.com/huntabyte>
 Copyright (c) 2023 CokaKoala <https://github.com/adriangonz97>
 Copyright (c) 2023 shadcn

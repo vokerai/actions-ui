@@ -1,19 +1,19 @@
 {
-	"name": "shadcn-svelte",
+	"name": "actions-ui",
 	"version": "0.0.1",
-	"description": "monorepo for shadcn-svelte",
+	"description": "monorepo for actions-ui",
 	"author": {
-		"name": "huntabyte",
-		"url": "https://twitter.com/huntabyte"
+		"name": "voker",
+		"url": "https://voker.ai"
 	},
 	"private": true,
 	"scripts": {
 		"build": "pnpm build:registry && pnpm build:site",
-		"build:cli": "pnpm -F shadcn-svelte build",
+		"build:cli": "pnpm -F actions-ui build",
 		"build:registry": "pnpm -F docs build:registry",
 		"build:site": "pnpm -F docs build",
 		"dev": "pnpm build:registry && pnpm -F docs dev",
-		"dev:cli": "pnpm -F shadcn-svelte dev",
+		"dev:cli": "pnpm -F actions-ui dev",
 		"preview": "pnpm -F docs preview",
 		"test": "pnpm -F docs test",
 		"check": "pnpm -F docs check",
@@ -35,7 +35,7 @@
 	"packageManager": "pnpm@9.7.1",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/huntabyte/shadcn-svelte.git"
+		"url": "https://github.com/vokerai/actions-ui.git"
 	},
 	"license": "MIT",
 	"type": "module",

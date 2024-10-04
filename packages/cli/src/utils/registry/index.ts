@@ -53,10 +53,6 @@ export function getStyles() {
 			name: "default",
 			label: "Default",
 		},
-		{
-			name: "new-york",
-			label: "New York",
-		},
 	];
 }
 

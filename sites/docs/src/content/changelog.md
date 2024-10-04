@@ -70,17 +70,17 @@ After some feedback about dev server performance, we've updated the way we impor
 Instead of importing icons like so:
 
 ```ts
-import { Check } from "lucide-svelte";
+import { Check } from 'lucide-svelte';
 // or
-import { Check } from "radix-icons-svelte";
+import { Check } from 'radix-icons-svelte';
 ```
 
 We now import them directly:
 
 ```ts
-import Check from "lucide-svelte/icons/check";
+import Check from 'lucide-svelte/icons/check';
 // or
-import Check from "svelte-radix/Check.svelte";
+import Check from 'svelte-radix/Check.svelte';
 ```
 
 With deep imports, we're preventing Vite from optimizing the entire icon collections, and instead only optimizing the icons that are actually used in your project. From what we've seen, this has a massive impact on dev server performance. Enjoy! 🚀
@@ -215,11 +215,11 @@ Since we had to make some internal changes to formsnap to fix outstanding issues
 
 ```svelte title="form-label.svelte" {2}
 <Label
-  for={$ids.input}
-  class={cn($errors && "text-destructive", className)}
-  {...$$restProps}
+    for="{$ids.input}"
+    class="{cn($errors && 'text-destructive', className)}"
+    {...$$restProps}
 >
-  <slot />
+    <slot />
 </Label>
 ```
 
@@ -232,9 +232,9 @@ Formsnap introduced a new component `<Form.Control />` which wraps non-tradition
 const Control = FormPrimitive.Control;
 
 export {
-  // ...rest
-  Control,
-  Control as FormControl,
+    // ...rest
+    Control,
+    Control as FormControl,
 };
 ```
 
@@ -255,75 +255,75 @@ If you're using `tailwindcss-animate` and want to migrate to the new transition 
 Update your `utils.ts` file to include the `flyAndScale` transition:
 
 ```ts title="src/lib/utils.ts"
-import { type ClassValue, clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
-import { cubicOut } from "svelte/easing";
-import type { TransitionConfig } from "svelte/transition";
+import { type ClassValue, clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+import { cubicOut } from 'svelte/easing';
+import type { TransitionConfig } from 'svelte/transition';
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
+    return twMerge(clsx(inputs));
 }
 
 type FlyAndScaleParams = {
-  y?: number;
-  x?: number;
-  start?: number;
-  duration?: number;
+    y?: number;
+    x?: number;
+    start?: number;
+    duration?: number;
 };
 
 export const flyAndScale = (
-  node: Element,
-  params: FlyAndScaleParams = { y: -8, x: 0, start: 0.95, duration: 150 }
+    node: Element,
+    params: FlyAndScaleParams = { y: -8, x: 0, start: 0.95, duration: 150 },
 ): TransitionConfig => {
-  const style = getComputedStyle(node);
-  const transform = style.transform === "none" ? "" : style.transform;
+    const style = getComputedStyle(node);
+    const transform = style.transform === 'none' ? '' : style.transform;
 
-  const scaleConversion = (
-    valueA: number,
-    scaleA: [number, number],
-    scaleB: [number, number]
-  ) => {
-    const [minA, maxA] = scaleA;
-    const [minB, maxB] = scaleB;
+    const scaleConversion = (
+        valueA: number,
+        scaleA: [number, number],
+        scaleB: [number, number],
+    ) => {
+        const [minA, maxA] = scaleA;
+        const [minB, maxB] = scaleB;
 
-    const percentage = (valueA - minA) / (maxA - minA);
-    const valueB = percentage * (maxB - minB) + minB;
+        const percentage = (valueA - minA) / (maxA - minA);
+        const valueB = percentage * (maxB - minB) + minB;
 
-    return valueB;
-  };
+        return valueB;
+    };
 
-  const styleToString = (
-    style: Record<string, number | string | undefined>
-  ): string => {
-    return Object.keys(style).reduce((str, key) => {
-      if (style[key] === undefined) return str;
-      return str + key + ":" + style[key] + ";";
-    }, "");
-  };
+    const styleToString = (
+        style: Record<string, number | string | undefined>,
+    ): string => {
+        return Object.keys(style).reduce((str, key) => {
+            if (style[key] === undefined) return str;
+            return str + key + ':' + style[key] + ';';
+        }, '');
+    };
 
-  return {
-    duration: params.duration ?? 200,
-    delay: 0,
-    css: (t) => {
-      const y = scaleConversion(t, [0, 1], [params.y ?? 5, 0]);
-      const x = scaleConversion(t, [0, 1], [params.x ?? 0, 0]);
-      const scale = scaleConversion(t, [0, 1], [params.start ?? 0.95, 1]);
+    return {
+        duration: params.duration ?? 200,
+        delay: 0,
+        css: (t) => {
+            const y = scaleConversion(t, [0, 1], [params.y ?? 5, 0]);
+            const x = scaleConversion(t, [0, 1], [params.x ?? 0, 0]);
+            const scale = scaleConversion(t, [0, 1], [params.start ?? 0.95, 1]);
 
-      return styleToString({
-        transform:
-          transform +
-          "translate3d(" +
-          x +
-          "px, " +
-          y +
-          "px, 0) scale(" +
-          scale +
-          ")",
-        opacity: t,
-      });
-    },
-    easing: cubicOut,
-  };
+            return styleToString({
+                transform:
+                    transform +
+                    'translate3d(' +
+                    x +
+                    'px, ' +
+                    y +
+                    'px, 0) scale(' +
+                    scale +
+                    ')',
+                opacity: t,
+            });
+        },
+        easing: cubicOut,
+    };
 };
 ```
 
@@ -331,31 +331,31 @@ Inside the components that use transitions/animations, you'll need to remove the
 
 ```svelte title="src/lib/components/ui/alert-dialog-content.svelte"
 <script lang="ts">
-  import { AlertDialog as AlertDialogPrimitive } from "bits-ui";
-  import * as AlertDialog from "./index.js";
-  import { cn, flyAndScale } from "$lib/utils.js";
+    import { AlertDialog as AlertDialogPrimitive } from 'bits-ui';
+    import * as AlertDialog from './index.js';
+    import { cn, flyAndScale } from '$lib/utils.js';
 
-  type $$Props = AlertDialogPrimitive.ContentProps;
+    type $$Props = AlertDialogPrimitive.ContentProps;
 
-  let className: $$Props["class"] = undefined;
-  export let transition: $$Props["transition"] = flyAndScale;
-  export let transitionConfig: $$Props["transitionConfig"] = undefined;
-  export { className as class };
+    let className: $$Props['class'] = undefined;
+    export let transition: $$Props['transition'] = flyAndScale;
+    export let transitionConfig: $$Props['transitionConfig'] = undefined;
+    export { className as class };
 </script>
 
 <AlertDialog.Portal>
-  <AlertDialog.Overlay />
-  <AlertDialogPrimitive.Content
-    {transition}
-    {transitionConfig}
-    class={cn(
-      "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg  sm:rounded-lg md:w-full",
-      className
-    )}
-    {...$$restProps}
-  >
-    <slot />
-  </AlertDialogPrimitive.Content>
+    <AlertDialog.Overlay />
+    <AlertDialogPrimitive.Content
+        {transition}
+        {transitionConfig}
+        class="{cn(
+            'fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg  sm:rounded-lg md:w-full',
+            className,
+        )}"
+        {...$$restProps}
+    >
+        <slot />
+    </AlertDialogPrimitive.Content>
 </AlertDialog.Portal>
 ```
 

@@ -4,12 +4,12 @@ description: Re-usable components built with Bits UI, Melt UI, and Tailwind CSS.
 ---
 
 <script>
-  import * as Accordion from '$lib/registry/new-york/ui/accordion';
+  import * as Accordion from '$lib/registry/default/ui/accordion';
   import { Callout } from '$lib/components/docs';
   import CircleAlert from "lucide-svelte/icons/circle-alert";
 </script>
 
-An unofficial, community-led [Svelte](https://svelte.dev) port of [shadcn/ui](https://ui.shadcn.com). We are not affiliated with [shadcn](https://twitter.com/shadcn), but we did get his blessing before creating a Svelte version of his work. This project was born out of the need for a similar project for the Svelte ecosystem.
+While using a component library we love, [shadcn-svelte](https://www.shadcn-svelte.com/), we've had to implement similar request handling logic and have decided to pull out some of the logic into a library to help others that find themselves in similar situations.
 
 This is **NOT** a component library. It's a collection of re-usable components that you can copy and paste or use the CLI to add to your apps.
 

@@ -1,10 +1,10 @@
-import template from "lodash.template";
-import type { Theme } from "$lib/registry/index.js";
+import template from 'lodash.template';
+import type { Theme } from '$lib/registry/index.js';
 
-export { default as ThemeCopyCodeButton } from "./copy-code-button.svelte";
-export { default as CustomizerCode } from "./customizer-code.svelte";
-export { default as ThemeCustomizer } from "./theme-customizer.svelte";
-export { default as Customizer } from "./customizer.svelte";
+export { default as ThemeCopyCodeButton } from './copy-code-button.svelte';
+export { default as CustomizerCode } from './customizer-code.svelte';
+export { default as ThemeCustomizer } from './theme-customizer.svelte';
+export { default as Customizer } from './customizer.svelte';
 
 const BASE_STYLES_WITH_VARIABLES = `
 @layer base {
@@ -55,12 +55,12 @@ const BASE_STYLES_WITH_VARIABLES = `
 }
 `;
 export function getThemeCode(theme: Theme, radius: number) {
-	if (!theme) {
-		return "";
-	}
+    if (!theme) {
+        return '';
+    }
 
-	return template(BASE_STYLES_WITH_VARIABLES)({
-		colors: theme.cssVars,
-		radius,
-	});
+    return template(BASE_STYLES_WITH_VARIABLES)({
+        colors: theme.cssVars,
+        radius,
+    });
 }

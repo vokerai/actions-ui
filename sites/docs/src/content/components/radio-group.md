@@ -1,8 +1,9 @@
 ---
 title: Radio Group
-description: A set of checkable buttons—known as radio buttons—where no more than one of the buttons can be checked at a time.
+description: A set of checkable buttons—known as radio buttons—where no more than one of the buttons can be checked at a time. On error, reverts to the original state and alerts the user.
 component: true
-source: https://github.com/huntabyte/shadcn-svelte/tree/main/sites/docs/src/lib/registry/default/ui/radio-group
+source: https://github.com/vokerai/actions-ui/tree/main/sites/docs/src/lib/registry/default/ui/loading-radio-group
+basedOn: https://www.shadcn-svelte.com/docs/components/radio-group
 bits: https://www.bits-ui.com/docs/components/radio-group
 ---
 
@@ -10,7 +11,7 @@ bits: https://www.bits-ui.com/docs/components/radio-group
   import { ComponentPreview, ManualInstall, PMAddComp, PMInstall } from '$lib/components/docs';
 </script>
 
-<ComponentPreview name="radio-group-demo">
+<ComponentPreview name="radio-group-error">
 
 <div />
 
@@ -34,27 +35,35 @@ bits: https://www.bits-ui.com/docs/components/radio-group
 
 ```svelte
 <script lang="ts">
-  import { Label } from "$lib/components/ui/label";
-  import * as RadioGroup from "$lib/components/ui/radio-group";
+    import { Label } from '$lib/components/ui/label';
+    import * as LoadingRadioGroup from '$lib/components/actions-ui/loading-radio-group';
 </script>
 
-<RadioGroup.Root value="option-one">
-  <div class="flex items-center space-x-2">
-    <RadioGroup.Item value="option-one" id="option-one" />
-    <Label for="option-one">Option One</Label>
-  </div>
-  <div class="flex items-center space-x-2">
-    <RadioGroup.Item value="option-two" id="option-two" />
-    <Label for="option-two">Option Two</Label>
-  </div>
-</RadioGroup.Root>
+<LoadingRadioGroup.Root value="option-one">
+    <div class="flex items-center space-x-2">
+        <LoadingRadioGroup.Item value="option-one" id="option-one" />
+        <Label for="option-one">Option One</Label>
+    </div>
+    <div class="flex items-center space-x-2">
+        <LoadingRadioGroup.Item value="option-two" id="option-two" />
+        <Label for="option-two">Option Two</Label>
+    </div>
+</LoadingRadioGroup.Root>
 ```
 
 ## Examples
 
-### Form
+### Success
 
-<ComponentPreview name="radio-group-form">
+<ComponentPreview name="radio-group-success">
+
+<div />
+
+</ComponentPreview>
+
+### Error
+
+<ComponentPreview name="radio-group-error">
 
 <div />
 

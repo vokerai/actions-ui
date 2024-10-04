@@ -32,10 +32,10 @@ The CLI will create a folder for _each_ component, which will sometimes just con
 
 For example, the Accordion component is split into four `.svelte` files:
 
-- `Accordion.svelte`
-- `AccordionContent.svelte`
-- `AccordionItem.svelte`
-- `AccordionTrigger.svelte`
+-   `Accordion.svelte`
+-   `AccordionContent.svelte`
+-   `AccordionItem.svelte`
+-   `AccordionTrigger.svelte`
 
 They can then be imported from the `accordion/index.ts` file like so:
 
@@ -64,16 +64,16 @@ To opt out of TypeScript, set the `typescript` flag to `false` in your `componen
 
 ```json {7} title="components.json"
 {
-  "style": "default",
-  "tailwind": {
-    "config": "tailwind.config.js",
-    "css": "src/app/globals.css"
-  },
-  "typescript": false,
-  "aliases": {
-    "utils": "$lib/utils",
-    "components": "$lib/components"
-  }
+    "style": "default",
+    "tailwind": {
+        "config": "tailwind.config.js",
+        "css": "src/app/globals.css"
+    },
+    "typescript": false,
+    "aliases": {
+        "utils": "$lib/utils",
+        "components": "$lib/components"
+    }
 }
 ```
 
@@ -81,11 +81,11 @@ To configure import aliases, create a `jsconfig.json` file:
 
 ```json {4} title="jsconfig.json"
 {
-  "compilerOptions": {
-    "paths": {
-      "$lib/*": ["./src/lib/*"]
+    "compilerOptions": {
+        "paths": {
+            "$lib/*": ["./src/lib/*"]
+        }
     }
-  }
 }
 ```
 
@@ -99,15 +99,15 @@ One option is to add a `.eslintrc` file in the directory where you define your c
 
 ```json title="src/lib/components/ui/.eslintrc"
 {
-  "rules": {
-    "@typescript-eslint/no-unused-vars": [
-      "warn",
-      {
-        "argsIgnorePattern": "^_",
-        "varsIgnorePattern": "^\\\\$\\\\$(Props|Events|Slots|Generic)$"
-      }
-    ]
-  }
+    "rules": {
+        "@typescript-eslint/no-unused-vars": [
+            "warn",
+            {
+                "argsIgnorePattern": "^_",
+                "varsIgnorePattern": "^\\\\$\\\\$(Props|Events|Slots|Generic)$"
+            }
+        ]
+    }
 }
 ```
 
@@ -120,28 +120,28 @@ If your global ESLint configuration is using the [flat config format](https://es
 ```js title="src/eslint.config.js"
 /** @type {import('eslint').Linter.FlatConfig[]} */
 export default [
-  /* ... */
-  {
-    files: ["**/*.svelte"],
-    languageOptions: {
-      parserOptions: {
-        parser: ts.parser,
-      },
-    },
-  },
-  {
-    /* location of your components where you would like to apply these rules  */
-    files: ["**/components/ui/**/*.svelte"],
-    rules: {
-      "@typescript-eslint/no-unused-vars": [
-        "warn",
-        {
-          argsIgnorePattern: "^_",
-          varsIgnorePattern: "^\\$\\$(Props|Events|Slots|Generic)$",
+    /* ... */
+    {
+        files: ['**/*.svelte'],
+        languageOptions: {
+            parserOptions: {
+                parser: ts.parser,
+            },
         },
-      ],
     },
-  },
+    {
+        /* location of your components where you would like to apply these rules  */
+        files: ['**/components/ui/**/*.svelte'],
+        rules: {
+            '@typescript-eslint/no-unused-vars': [
+                'warn',
+                {
+                    argsIgnorePattern: '^_',
+                    varsIgnorePattern: '^\\$\\$(Props|Events|Slots|Generic)$',
+                },
+            ],
+        },
+    },
 ];
 ```
 
@@ -151,10 +151,10 @@ Install the shadcn-svelte [VSCode extension](https://marketplace.visualstudio.co
 
 This extension offers a range of features:
 
-- Ability to initialize the shadcn-svelte CLI
-- Add components to your project
-- Navigate to a specific component's documentation page directly from your IDE
-- Handy snippets for quick component imports and markup
+-   Ability to initialize the shadcn-svelte CLI
+-   Add components to your project
+-   Navigate to a specific component's documentation page directly from your IDE
+-   Handy snippets for quick component imports and markup
 
 ## JetBrains IDEs extension
 
@@ -162,7 +162,7 @@ Install the shadcn/ui Components Manager [JetBrains extension](https://plugins.j
 
 This extension offers a range of features, including:
 
-- Automatically detect shadcn/ui components in your project
-- Instantly add, remove, and update them with a single click
-- Supports all shadcn/ui implementations: Svelte, React, Vue, and Solid
-- Easily search for remote or existing components
+-   Automatically detect shadcn/ui components in your project
+-   Instantly add, remove, and update them with a single click
+-   Supports all shadcn/ui implementations: Svelte, React, Vue, and Solid
+-   Easily search for remote or existing components

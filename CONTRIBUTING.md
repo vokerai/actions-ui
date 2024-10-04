@@ -1,10 +1,10 @@
-# Contributing to shadcn-svelte
+# Contributing to actions-ui
 
 We appreciate your interest in contributing. This guide will help you get started with the contribution process.
 
 ## Table of Contents
 
-- [Contributing to shadcn-svelte](#contributing-to-shadcn-svelte)
+- [Contributing to actions-ui](#contributing-to-actions-ui)
   - [Table of Contents](#table-of-contents)
   - [Ways to contribute](#ways-to-contribute)
   - [How to contribute](#how-to-contribute)
@@ -18,7 +18,6 @@ This project is open to contributions from the community.
 We welcome contributions in the following areas:
 
 - **Feedback**: We're always looking for feedback on the project. If you have any suggestions, ideas, please open an issue to discuss it. One thing that should be noted is that this project is a port of `shadcn/ui`, meaning we won't be adding new components to this project unless they are added to `shadcn/ui` first.
-- **Support**: If you feel confident in your ability to help others with their questions, please join the [Discord](https://discord.gg/SRbSSrvXug) and help out in the `libs` -> `shadcn-support` channel, or answer questions asked in [Discussions](https://github.com/huntabyte/shadcn-svelte/discussions).
 - **Documentation improvements**: See a typo or broken link? Or do you think the documentation could be improved in some other way? If it's a typo/broken link, feel free to open a PR. If the change would involve more than a few line changes, please open an issue to discuss it first before spending time on it.
 - **Code optimizations**: If you see a way to improve the code, please open an issue to discuss it.
 
@@ -44,10 +43,6 @@ Here's what the process looks like:
 **NOTE:** Do not submit a pull request for anything other than minor documentation/typo fixes without first opening an issue and having it assigned to you. We don't want you to waste time on something that may not be merged/accepted.
 
 To volunteer to solve someone else's issue, please leave a comment on the issue to let us know that you'd like to work on it, along with a brief description of how you plan to address the issue (if it's not already clear from the issue description), and we'll assign the issue to you.
-
-## Questions
-
-If you're looking to contribute and have questions about the process or the codebase in general, feel free to ask in the [Discord](https://hbyt.us/discord) in the `libs`->`shadcn-chat` channel!
 
 ## License
 

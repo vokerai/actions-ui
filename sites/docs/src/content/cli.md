@@ -11,37 +11,19 @@ description: Use the CLI to add components to your project.
 
 Use the `init` command to initialize dependencies for a new project.
 
-The `init` command installs dependencies, adds the `cn` util, configures `tailwind.config.cjs`, and creates CSS variables for the project.
-
-<PMExecute command="shadcn-svelte@latest init" />
-
-You will be asked a few questions to configure `components.json`:
-
-```txt showLineNumbers
-Which style would you like to use? › Default
-Which base color would you like to use? › Slate
-Where is your global CSS file? (this file will be overwritten) › src/app.css
-Where is your Tailwind config located? (this file will be overwritten) › tailwind.config.[cjs|js|ts]
-Configure the import alias for components: › $lib/components
-Configure the import alias for utils: › $lib/utils
-```
+<PMExecute command="actions-ui@latest init" />
 
 ### Options
 
 ```txt
-Usage: shadcn-svelte init [options]
+Usage: actions-ui init [options]
 
 initialize your project and install dependencies
 
 Options:
   -c, --cwd <cwd>            the working directory (default: the current directory)
   --no-deps                  disable adding & installing dependencies
-  --style <name>             the style for the components (choices: "default", "new-york")
-  --base-color <name>        the base color for the components (choices: "slate", "gray", "zinc", "neutral", "stone")
-  --css <path>               path to the global CSS file
-  --tailwind-config <path>   path to the tailwind config file
-  --components-alias <path>  import alias for components
-  --utils-alias <path>       import alias for utils
+  --proxy <proxy>            fetch components from registry using a proxy
   -h, --help                 display help for command
 ```
 
@@ -49,29 +31,26 @@ Options:
 
 Use the `add` command to add components and dependencies to your project.
 
-<PMExecute command="shadcn-svelte@latest add [component]" />
+<PMExecute command="actions-ui@latest add [component]" />
 
 You will be presented with a list of components to choose from:
 
 ```txt
 Which components would you like to add? › Space to select. Return to submit.
 
-◯  accordion
-◯  alert
-◯  alert-dialog
-◯  aspect-ratio
-◯  avatar
-◯  badge
 ◯  button
-◯  card
 ◯  checkbox
-◯  collapsible
+◯  radio-group
+◯  select
+◯  switch
+◯  toggle-group
+◯  toggle
 ```
 
 ### Options
 
 ```txt
-Usage: shadcn-svelte add [options] [components...]
+Usage: actions-ui add [options] [components...]
 
 add components to your project
 
@@ -93,12 +72,12 @@ Options:
 
 Use the `update` command to update components in your project. This will overwrite any modifications you've made to the components, so be sure to commit your changes before running this command.
 
-<PMExecute command="shadcn-svelte@latest update [component]" />
+<PMExecute command="actions-ui@latest update [component]" />
 
 ### Options
 
 ```txt
-Usage: shadcn-svelte update [options] [components...]
+Usage: actions-ui update [options] [components...]
 
 update components in your project
 
@@ -120,5 +99,5 @@ Options:
 This enables the use of a proxy when sending out requests to fetch from the `shadcn` registry. If the `HTTP_PROXY` or `http_proxy` environment variables have been set, the request library underneath will respect the proxy settings.
 
 ```bash
-HTTP_PROXY="<proxy-url>" npx shadcn-svelte@latest init
+HTTP_PROXY="<proxy-url>" npx actions-ui@latest init
 ```

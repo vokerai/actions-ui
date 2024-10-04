@@ -4,7 +4,7 @@ description: How to setup shadcn-svelte in an Astro project.
 ---
 
 <script>
-  import { Alert, AlertDescription } from "$lib/registry/new-york/ui/alert";
+  import { Alert, AlertDescription } from "$lib/registry/default/ui/alert";
   import { Steps, Callout, PMCreate, PMExecute, PMInstall, PMAddComp } from "$lib/components/docs";
 </script>
 
@@ -67,14 +67,14 @@ Add the following code to the `tsconfig.json` file to resolve paths:
 
 ```jsonc title="tsconfig.json" {2-9} showLineNumbers
 {
-  "compilerOptions": {
-    // ...
-    "baseUrl": ".",
-    "paths": {
-      "$lib/*": ["./src/*"],
+    "compilerOptions": {
+        // ...
+        "baseUrl": ".",
+        "paths": {
+            "$lib/*": ["./src/*"],
+        },
+        // ...
     },
-    // ...
-  },
 }
 ```
 
@@ -106,9 +106,9 @@ import "$lib/styles/app.css";
 
 ### Run the CLI
 
-Run the `shadcn-svelte` init command to setup your project:
+Run the `actions-ui` init command to setup your project:
 
-<PMExecute command="shadcn-svelte@latest init" />
+<PMExecute command="actions-ui@latest init" />
 
 ### Configure components.json
 
@@ -130,23 +130,23 @@ To prevent serving the Tailwind base styles twice, we need to tell Astro not to 
 
 ```ts title="astro.config.mjs" {3-5} showLineNumbers
 export default defineConfig({
-  integrations: [
-    tailwind({
-      applyBaseStyles: false,
-    }),
-    // ...
-  ],
+    integrations: [
+        tailwind({
+            applyBaseStyles: false,
+        }),
+        // ...
+    ],
 });
 ```
 
 ### Update tailwind.config.mjs
 
-When running `shadcn-svelte@latest init`, your Tailwind config for content will be overwritten. To fix this, add `astro` as one of the options inside of `content`:
+When running `actions-ui@latest init`, your Tailwind config for content will be overwritten. To fix this, add `astro` as one of the options inside of `content`:
 
 ```js title="tailwind.config.mjs" {1-4} showLineNumbers
 const config = {
-  content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
-  // ...
+    content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
+    // ...
 };
 // ...
 export default config;

@@ -1,8 +1,9 @@
 ---
 title: Toggle
-description: A two-state button that can be either on or off.
+description: A two-state button that can be either on or off. On error, reverts to the original state and alerts the user.
 component: true
-source: https://github.com/huntabyte/shadcn-svelte/tree/main/sites/docs/src/lib/registry/default/ui/toggle
+source: https://github.com/vokerai/actions-ui/tree/main/sites/docs/src/lib/registry/default/ui/toggle
+basedOn: https://www.shadcn-svelte.com/docs/components/toggle
 bits: https://www.bits-ui.com/docs/components/toggle
 ---
 
@@ -10,7 +11,7 @@ bits: https://www.bits-ui.com/docs/components/toggle
   import { ComponentPreview, ManualInstall, PMAddComp, PMInstall } from '$lib/components/docs';
 </script>
 
-<ComponentPreview name="toggle-demo">
+<ComponentPreview name="toggle-error">
 
 <div />
 
@@ -34,57 +35,30 @@ bits: https://www.bits-ui.com/docs/components/toggle
 
 ```svelte
 <script lang="ts">
-  import { Toggle } from "$lib/components/ui/toggle";
+    import * as LoadingToggle from '$lib/components/actions-ui/loading-toggle';
 </script>
 
-<Toggle>Toggle</Toggle>
+<LoadingToggle.Root aria-label="toggle bold">
+    Toggle
+
+    <!-- (optional) show error -->
+    <LoadingToggle.Sonner title="Could not save toggle" />
+</LoadingToggle.Root>
 ```
 
 ## Examples
 
-### Default
+### Success
 
-<ComponentPreview name="toggle-demo">
-
-<div />
-
-</ComponentPreview>
-
-### Outline
-
-<ComponentPreview name="toggle-outline">
+<ComponentPreview name="toggle-success">
 
 <div />
 
 </ComponentPreview>
 
-### With Text
+### Error
 
-<ComponentPreview name="toggle-with-text">
-
-<div />
-
-</ComponentPreview>
-
-### Small
-
-<ComponentPreview name="toggle-sm">
-
-<div />
-
-</ComponentPreview>
-
-### Large
-
-<ComponentPreview name="toggle-lg">
-
-<div />
-
-</ComponentPreview>
-
-### Disabled
-
-<ComponentPreview name="toggle-disabled">
+<ComponentPreview name="toggle-error">
 
 <div />
 

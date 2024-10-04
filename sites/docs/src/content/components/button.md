@@ -1,9 +1,10 @@
 ---
 title: Button
-description: Displays a button or a component that looks like a button.
+description: Displays a button or a component that looks like a button. On error, alerts the user.
 featured: true
 component: true
-source: https://github.com/huntabyte/shadcn-svelte/tree/main/sites/docs/src/lib/registry/default/ui/button
+source: https://github.com/vokerai/actions-ui/tree/main/sites/docs/src/lib/registry/default/ui/loading-button
+basedOn: https://www.shadcn-svelte.com/docs/components/button
 bits: https://www.bits-ui.com/docs/components/button
 ---
 
@@ -11,7 +12,7 @@ bits: https://www.bits-ui.com/docs/components/button
   import { ComponentPreview, ManualInstall, PMAddComp, PMInstall } from '$lib/components/docs';
 </script>
 
-<ComponentPreview name="button-demo">
+<ComponentPreview name="button-error">
 
 <div />
 
@@ -35,53 +36,31 @@ bits: https://www.bits-ui.com/docs/components/button
 
 ```svelte
 <script lang="ts">
-  import { Button } from "$lib/components/ui/button";
+    import * as LoadingButton from '$lib/components/actions-ui/loading-button';
 </script>
 ```
 
 ```svelte
-<Button variant="outline">Button</Button>
-```
+<LoadingButton.Root {trigger}>
+    <!-- (optional) shows spinner while loading -->
+    <LoadingButton.Spinner />
 
-### Link
+    <!-- content to show before loading -->
+    <LoadingButton.Content>Save</LoadingButton.Content>
 
-You can convert the `<button>` into an `<a>` element by simply passing an `href` as a prop.
+    <!-- content to show while loading -->
+    <LoadingButton.Loading>Saving</LoadingButton.Loading>
 
-```svelte
-<script lang="ts">
-  import { Button } from "$lib/components/ui/button";
-</script>
-
-<Button href="/dashboard">Dashboard</Button>
-```
-
-Alternatively, you can use the `buttonVariants` helper to create a link that looks like a button.
-
-```svelte
-<script lang="ts">
-  import { buttonVariants } from "$lib/components/ui/button";
-</script>
-
-<a href="/dashboard" class={buttonVariants({ variant: "outline" })}>
-  Dashboard
-</a>
+    <!-- (optional) error popup -->
+    <LoadingButton.Sonner title="Could not save" />
+</LoadingButton.Root>
 ```
 
 ## Examples
 
-### Primary
+### Success
 
-<ComponentPreview name="button-demo">
-
-<div />
-
-</ComponentPreview>
-
----
-
-### Secondary
-
-<ComponentPreview name="button-secondary">
+<ComponentPreview name="button-success">
 
 <div />
 
@@ -89,69 +68,9 @@ Alternatively, you can use the `buttonVariants` helper to create a link that loo
 
 ---
 
-### Destructive
+### Error
 
-<ComponentPreview name="button-destructive">
-
-<div />
-
-</ComponentPreview>
-
----
-
-### Outline
-
-<ComponentPreview name="button-outline">
-
-<div />
-
-</ComponentPreview>
-
----
-
-### Ghost
-
-<ComponentPreview name="button-ghost">
-
-<div />
-
-</ComponentPreview>
-
----
-
-### Link
-
-<ComponentPreview name="button-link">
-
-<div />
-
-</ComponentPreview>
-
----
-
-### With Icon
-
-<ComponentPreview name="button-with-icon">
-
-<div />
-
-</ComponentPreview>
-
----
-
-### Icon
-
-<ComponentPreview name="button-icon">
-
-<div />
-
-</ComponentPreview>
-
----
-
-### Loading
-
-<ComponentPreview name="button-loading">
+<ComponentPreview name="button-error">
 
 <div />
 

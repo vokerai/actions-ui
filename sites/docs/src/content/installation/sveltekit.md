@@ -4,7 +4,7 @@ description: How to setup shadcn-svelte in a SvelteKit project.
 ---
 
 <script>
-  import { Alert, AlertDescription } from "$lib/registry/new-york/ui/alert";
+  import { Alert, AlertDescription } from "$lib/registry/default/ui/alert";
   import { Steps, PMCreate, PMExecute, PMInstall, PMAddComp } from "$lib/components/docs";
 </script>
 
@@ -34,19 +34,19 @@ If you are not using the default alias `$lib`, you'll need to update your `svelt
 
 ```js title="svelte.config.js" {6}
 const config = {
-  // ... other config
-  kit: {
     // ... other config
-    alias: {
-      "@/*": "./path/to/lib/*",
+    kit: {
+        // ... other config
+        alias: {
+            '@/*': './path/to/lib/*',
+        },
     },
-  },
 };
 ```
 
 ### Run the CLI
 
-<PMExecute command="shadcn-svelte@latest init" />
+<PMExecute command="actions-ui@latest init" />
 
 ### Configure components.json
 
@@ -72,7 +72,7 @@ The command above will add the `Button` component to your project. You can then 
 
 ```svelte {2,5} showLineNumbers
 <script lang="ts">
-  import { Button } from "$lib/components/ui/button";
+    import { Button } from '$lib/components/ui/button';
 </script>
 
 <Button>Click me</Button>

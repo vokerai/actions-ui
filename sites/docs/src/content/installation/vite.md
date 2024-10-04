@@ -4,7 +4,7 @@ description: How to setup shadcn-svelte in a Vite project.
 ---
 
 <script>
-  import { Alert, AlertDescription } from "$lib/registry/new-york/ui/alert";
+  import { Alert, AlertDescription } from "$lib/registry/default/ui/alert";
   import { Steps, PMAddComp, PMInstall, PMExecute } from "$lib/components/docs";
 </script>
 
@@ -28,32 +28,32 @@ Update your path aliases in your `tsconfig.json` and `vite.config.ts`.
 
 ```json title="tsconfig.json" {3-7}
 {
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "$lib": ["./src/lib"],
-      "$lib/*": ["./src/lib/*"]
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "$lib": ["./src/lib"],
+            "$lib/*": ["./src/lib/*"]
+        }
     }
-  }
 }
 ```
 
 ```js title="vite.config.ts" {1, 5-9}
-import path from "path";
+import path from 'path';
 
 export default defineConfig({
-  // ... other options
-  resolve: {
-    alias: {
-      $lib: path.resolve("./src/lib"),
+    // ... other options
+    resolve: {
+        alias: {
+            $lib: path.resolve('./src/lib'),
+        },
     },
-  },
 });
 ```
 
 ### Run the CLI
 
-<PMExecute command="shadcn-svelte@latest init" />
+<PMExecute command="actions-ui@latest init" />
 
 ### Configure components.json
 
@@ -79,7 +79,7 @@ The command above will add the `Button` component to your project. You can then 
 
 ```svelte {2,5} showLineNumbers
 <script lang="ts">
-  import { Button } from "$lib/components/ui/button";
+    import { Button } from '$lib/components/ui/button';
 </script>
 
 <Button>Click me</Button>

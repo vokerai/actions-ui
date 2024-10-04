@@ -1,8 +1,9 @@
 ---
 title: Toggle Group
-description: A set of two-state buttons that can be toggled on or off.
+description: A set of two-state buttons that can be toggled on or off. On error, reverts to the original state and alerts the user.
 component: true
-source: https://github.com/huntabyte/shadcn-svelte/tree/main/sites/docs/src/lib/registry/default/ui/toggle-group
+source: https://github.com/vokerai/actions-ui/tree/main/sites/docs/src/lib/registry/default/ui/loading-toggle-group
+basedOn: https://www.shadcn-svelte.com/docs/components/toggle-group
 bits: https://www.bits-ui.com/docs/components/toggle-group
 ---
 
@@ -10,7 +11,7 @@ bits: https://www.bits-ui.com/docs/components/toggle-group
   import { ComponentPreview, ManualInstall, PMAddComp, PMInstall } from '$lib/components/docs';
 </script>
 
-<ComponentPreview name="toggle-group-demo">
+<ComponentPreview name="toggle-group-error">
 
 <div />
 
@@ -34,61 +35,29 @@ bits: https://www.bits-ui.com/docs/components/toggle-group
 
 ```svelte
 <script lang="ts">
-  import * as ToggleGroup from "$lib/components/ui/toggle-group";
+    import * as LoadingToggleGroup from '$lib/components/actions-ui/loading-toggle-group';
 </script>
 
 <ToggleGroup.Root type="single">
-  <ToggleGroup.Item value="a">A</ToggleGroup.Item>
-  <ToggleGroup.Item value="b">B</ToggleGroup.Item>
-  <ToggleGroup.Item value="c">C</ToggleGroup.Item>
+    <ToggleGroup.Item value="a">A</ToggleGroup.Item>
+    <ToggleGroup.Item value="b">B</ToggleGroup.Item>
+    <ToggleGroup.Item value="c">C</ToggleGroup.Item>
 </ToggleGroup.Root>
 ```
 
 ## Examples
 
-### Default
+### Success
 
-<ComponentPreview name="toggle-group-demo">
-
-<div />
-
-</ComponentPreview>
-
-### Outline
-
-<ComponentPreview name="toggle-group-outline">
+<ComponentPreview name="toggle-group-success">
 
 <div />
 
 </ComponentPreview>
 
-### Single
+### Error
 
-<ComponentPreview name="toggle-group-single">
-
-<div />
-
-</ComponentPreview>
-
-### Small
-
-<ComponentPreview name="toggle-group-sm">
-
-<div />
-
-</ComponentPreview>
-
-### Large
-
-<ComponentPreview name="toggle-group-lg">
-
-<div />
-
-</ComponentPreview>
-
-### Disabled
-
-<ComponentPreview name="toggle-group-disabled">
+<ComponentPreview name="toggle-group-error">
 
 <div />
 
