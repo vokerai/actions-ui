@@ -2,7 +2,7 @@
 title: Toggle Group
 description: A set of two-state buttons that can be toggled on or off. On error, reverts to the original state and alerts the user.
 component: true
-source: https://github.com/vokerai/actions-ui/tree/main/sites/docs/src/lib/registry/default/ui/loading-toggle-group
+source: https://github.com/vokerai/actions-ui/tree/main/sites/docs/src/lib/registry/default/ui/action-toggle-group
 basedOn: https://www.shadcn-svelte.com/docs/components/toggle-group
 bits: https://www.bits-ui.com/docs/components/toggle-group
 ---
@@ -35,14 +35,14 @@ bits: https://www.bits-ui.com/docs/components/toggle-group
 
 ```svelte
 <script lang="ts">
-    import * as LoadingToggleGroup from '$lib/components/actions-ui/loading-toggle-group';
+    import * as ActionToggleGroup from '$lib/components/actions-ui/action-toggle-group';
 </script>
 
-<ToggleGroup.Root type="single">
-    <ToggleGroup.Item value="a">A</ToggleGroup.Item>
-    <ToggleGroup.Item value="b">B</ToggleGroup.Item>
-    <ToggleGroup.Item value="c">C</ToggleGroup.Item>
-</ToggleGroup.Root>
+<ActionToggleGroup.Root type="single">
+    <ActionToggleGroup.Item value="a">A</ActionToggleGroup.Item>
+    <ActionToggleGroup.Item value="b">B</ActionToggleGroup.Item>
+    <ActionToggleGroup.Item value="c">C</ActionToggleGroup.Item>
+</ActionToggleGroup.Root>
 ```
 
 ## Examples

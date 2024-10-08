@@ -1,6 +1,6 @@
 <script lang="ts">
     import Bold from 'lucide-svelte/icons/bold';
-    import * as LoadingToggle from '$lib/registry/default/actions-ui/loading-toggle';
+    import * as ActionToggle from '$lib/registry/default/actions-ui/action-toggle';
 
     const onPressedChange = async () => {
         return new Promise((r) => {
@@ -11,7 +11,7 @@
     };
 </script>
 
-<LoadingToggle.Root {onPressedChange} aria-label="toggle bold">
+<ActionToggle.Root {onPressedChange}>
     <Bold class="h-4 w-4" />
-    <LoadingToggle.Sonner title="Could not save toggle" />
-</LoadingToggle.Root>
+    <ActionToggle.ErrorToast title="Could not save toggle" />
+</ActionToggle.Root>

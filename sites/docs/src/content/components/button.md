@@ -3,7 +3,7 @@ title: Button
 description: Displays a button or a component that looks like a button. On error, alerts the user.
 featured: true
 component: true
-source: https://github.com/vokerai/actions-ui/tree/main/sites/docs/src/lib/registry/default/ui/loading-button
+source: https://github.com/vokerai/actions-ui/tree/main/sites/docs/src/lib/registry/default/ui/action-button
 basedOn: https://www.shadcn-svelte.com/docs/components/button
 bits: https://www.bits-ui.com/docs/components/button
 ---
@@ -36,24 +36,24 @@ bits: https://www.bits-ui.com/docs/components/button
 
 ```svelte
 <script lang="ts">
-    import * as LoadingButton from '$lib/components/actions-ui/loading-button';
+    import * as ActionButton from '$lib/components/actions-ui/action-button';
 </script>
 ```
 
 ```svelte
-<LoadingButton.Root {trigger}>
+<ActionButton.Root>
     <!-- (optional) shows spinner while loading -->
-    <LoadingButton.Spinner />
+    <ActionButton.Spinner />
 
     <!-- content to show before loading -->
-    <LoadingButton.Content>Save</LoadingButton.Content>
+    <ActionButton.Content>Save</ActionButton.Content>
 
     <!-- content to show while loading -->
-    <LoadingButton.Loading>Saving</LoadingButton.Loading>
+    <ActionButton.Loading>Saving</ActionButton.Loading>
 
     <!-- (optional) error popup -->
-    <LoadingButton.Sonner title="Could not save" />
-</LoadingButton.Root>
+    <ActionButton.ErrorToast title="Could not save" />
+</ActionButton.Root>
 ```
 
 ## Examples

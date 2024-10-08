@@ -35,15 +35,13 @@ bits: https://www.bits-ui.com/docs/components/toggle
 
 ```svelte
 <script lang="ts">
-    import * as LoadingToggle from '$lib/components/actions-ui/loading-toggle';
+    import * as ActionToggle from '$lib/components/actions-ui/action-toggle';
 </script>
 
-<LoadingToggle.Root aria-label="toggle bold">
-    Toggle
-
+<ActionToggle.Root>
     <!-- (optional) show error -->
-    <LoadingToggle.Sonner title="Could not save toggle" />
-</LoadingToggle.Root>
+    <ActionToggle.ErrorToast title="Could not save toggle" />
+</ActionToggle.Root>
 ```
 
 ## Examples

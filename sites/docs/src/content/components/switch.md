@@ -2,7 +2,7 @@
 title: switch
 description: A control that allows the user to toggle between checked and not checked. On error, reverts to the original state and alerts the user.
 component: true
-source: https://github.com/vokerai/actions-ui/tree/main/sites/docs/src/lib/registry/default/ui/loading-switch
+source: https://github.com/vokerai/actions-ui/tree/main/sites/docs/src/lib/registry/default/ui/action-switch
 basedOn: https://www.shadcn-svelte.com/docs/components/switch
 bits: https://www.bits-ui.com/docs/components/switch
 ---
@@ -35,19 +35,19 @@ bits: https://www.bits-ui.com/docs/components/switch
 
 ```svelte
 <script lang="ts">
-    import * as LoadingLoadingSwitch from '$lib/components/actions-ui/loading-switch';
+    import * as ActionSwitch from '$lib/components/actions-ui/action-switch';
 </script>
 
-<LoadingSwitch.Root>
-    <LoadingSwitch.Trigger class="w-[180px]">
-        <LoadingSwitch.Value placeholder="Theme" />
-    </LoadingSwitch.Trigger>
-    <LoadingSwitch.Content>
-        <LoadingSwitch.Item value="light">Light</LoadingSwitch.Item>
-        <LoadingSwitch.Item value="dark">Dark</LoadingSwitch.Item>
-        <LoadingSwitch.Item value="system">System</LoadingSwitch.Item>
-    </LoadingSwitch.Content>
-</LoadingSwitch.Root>
+<ActionSwitch.Root>
+    <ActionSwitch.Trigger class="w-[180px]">
+        <ActionSwitch.Value placeholder="Theme" />
+    </ActionSwitch.Trigger>
+    <ActionSwitch.Content>
+        <ActionSwitch.Item value="light">Light</ActionSwitch.Item>
+        <ActionSwitch.Item value="dark">Dark</ActionSwitch.Item>
+        <ActionSwitch.Item value="system">System</ActionSwitch.Item>
+    </ActionSwitch.Content>
+</ActionSwitch.Root>
 ```
 
 ## Examples

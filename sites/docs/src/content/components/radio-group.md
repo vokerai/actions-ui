@@ -36,19 +36,19 @@ bits: https://www.bits-ui.com/docs/components/radio-group
 ```svelte
 <script lang="ts">
     import { Label } from '$lib/components/ui/label';
-    import * as LoadingRadioGroup from '$lib/components/actions-ui/loading-radio-group';
+    import * as ActionRadioGroup from '$lib/components/actions-ui/action-radio-group';
 </script>
 
-<LoadingRadioGroup.Root value="option-one">
+<ActionRadioGroup.Root value="option-one">
     <div class="flex items-center space-x-2">
-        <LoadingRadioGroup.Item value="option-one" id="option-one" />
+        <ActionRadioGroup.Item value="option-one" id="option-one" />
         <Label for="option-one">Option One</Label>
     </div>
     <div class="flex items-center space-x-2">
-        <LoadingRadioGroup.Item value="option-two" id="option-two" />
+        <ActionRadioGroup.Item value="option-two" id="option-two" />
         <Label for="option-two">Option Two</Label>
     </div>
-</LoadingRadioGroup.Root>
+</ActionRadioGroup.Root>
 ```
 
 ## Examples

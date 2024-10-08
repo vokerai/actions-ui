@@ -1,5 +1,5 @@
 <script lang="ts">
-    import * as LoadingCheckbox from '$lib/registry/default/actions-ui/loading-checkbox';
+    import * as ActionCheckbox from '$lib/registry/default/actions-ui/action-checkbox';
 
     const onCheckedChange = async () => {
         return new Promise((r) => {
@@ -10,6 +10,6 @@
     };
 </script>
 
-<LoadingCheckbox.Root {onCheckedChange}>
-    <LoadingCheckbox.Sonner title="Could not use checkbox" />
-</LoadingCheckbox.Root>
+<ActionCheckbox.Root {onCheckedChange}>
+    <ActionCheckbox.ErrorToast title="Could not use checkbox" />
+</ActionCheckbox.Root>

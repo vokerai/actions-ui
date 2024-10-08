@@ -1,7 +1,7 @@
 <script lang="ts">
-    import * as LoadingButton from '$lib/registry/default/actions-ui/loading-button';
+    import * as ActionButton from '$lib/registry/default/actions-ui/action-button';
 
-    const trigger = async () => {
+    const onClick = async () => {
         return new Promise((r) => {
             setTimeout(() => {
                 r({ error: 'whoops' });
@@ -10,9 +10,9 @@
     };
 </script>
 
-<LoadingButton.Root {trigger}>
-    <LoadingButton.Spinner />
-    <LoadingButton.Content>Save</LoadingButton.Content>
-    <LoadingButton.Loading>Saving</LoadingButton.Loading>
-    <LoadingButton.Sonner title="Could not save" />
-</LoadingButton.Root>
+<ActionButton.Root {onClick}>
+    <ActionButton.Spinner />
+    <ActionButton.Content>Save</ActionButton.Content>
+    <ActionButton.Loading>Saving</ActionButton.Loading>
+    <ActionButton.ErrorToast title="Could not save" />
+</ActionButton.Root>

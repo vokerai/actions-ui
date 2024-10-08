@@ -1,13 +1,13 @@
 <script lang="ts">
     import Sonner from '$lib/components/ui/sonner/sonner.svelte';
     import { toast } from 'svelte-sonner';
-    import { getSonnerCtx } from './context';
+    import { getToastErrorCtx } from './context';
     import { getContext, onMount } from 'svelte';
     import { browser } from '$app/environment';
 
     export let title: string;
 
-    const ctx = getSonnerCtx();
+    const ctx = getToastErrorCtx();
 
     const sendToast = (description: string | undefined) => {
         if (description === undefined) {

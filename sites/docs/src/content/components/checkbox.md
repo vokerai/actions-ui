@@ -2,7 +2,7 @@
 title: Checkbox
 description: A control that allows the user to toggle between checked and not checked. On error, reverts to the original state and alerts the user.
 component: true
-source: https://github.com/vokerai/actions-ui/tree/main/sites/docs/src/lib/registry/default/ui/loading-checkbox
+source: https://github.com/vokerai/actions-ui/tree/main/sites/docs/src/lib/registry/default/ui/action-checkbox
 basedOn: https://www.shadcn-svelte.com/docs/components/checkbox
 bits: https://www.bits-ui.com/docs/components/checkbox
 ---
@@ -35,15 +35,15 @@ bits: https://www.bits-ui.com/docs/components/checkbox
 
 ```svelte
 <script lang="ts">
-    import * as LoadingCheckbox from '$lib/components/actions-ui/loading-checkbox';
+    import * as ActionCheckbox from '$lib/components/actions-ui/action-checkbox';
 </script>
 ```
 
 ```svelte
-<LoadingCheckbox.Root onCheckedChange="{trigger}">
+<ActionCheckbox.Root onCheckedChange="{trigger}">
     <!-- (optional) show error message -->
-    <LoadingCheckbox.Sonner title="Could not use checkbox" />
-</LoadingCheckbox.Root>
+    <ActionCheckbox.ErrorToast title="Could not use checkbox" />
+</ActionCheckbox.Root>
 ```
 
 ## Examples

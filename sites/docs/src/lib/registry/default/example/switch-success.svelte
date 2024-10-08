@@ -1,6 +1,6 @@
 <script lang="ts">
     import { Label } from '$lib/registry/default/ui/label/index.js';
-    import * as LoadingSwitch from '$lib/registry/default/actions-ui/loading-switch';
+    import * as ActionSwitch from '$lib/registry/default/actions-ui/action-switch';
 
     const onCheckedChange = async () => {
         return new Promise((r) => {
@@ -12,8 +12,8 @@
 </script>
 
 <div class="flex items-center space-x-2">
-    <LoadingSwitch.Root {onCheckedChange} id="airplane-mode">
-        <LoadingSwitch.Sonner title="Could not save switch" />
-    </LoadingSwitch.Root>
+    <ActionSwitch.Root {onCheckedChange} id="airplane-mode">
+        <ActionSwitch.ErrorToast title="Could not save switch" />
+    </ActionSwitch.Root>
     <Label for="airplane-mode">Airplane Mode</Label>
 </div>
