@@ -177,8 +177,12 @@ export function rehypeComponentExample() {
 
                 try {
                     for (const style of styles) {
+                        // if (Index[style.name] === undefined) {
+                        //     continue;
+                        // }
+
                         // @ts-expect-error - this is fine
-                        const component = Index[style.name][name];
+                        const component = Index.default[name];
                         const src = component.files[0].replace(
                             '/lib/',
                             '/src/lib/',
@@ -187,8 +191,6 @@ export function rehypeComponentExample() {
                         if (!sourceCode || sourceCode === null) {
                             return;
                         }
-
-                        console.log({ sourceCode });
 
                         sourceCode = sourceCode.replaceAll(
                             '$lib/registry/default/',

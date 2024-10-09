@@ -9,7 +9,6 @@ import * as cliConfig from "../utils/get-config.js";
 import type { Config } from "../utils/get-config.js";
 import { error, handleError } from "../utils/errors.js";
 import { getBaseColors, getRegistryBaseColor, getStyles } from "../utils/registry";
-import * as templates from "../utils/templates.js";
 import * as p from "../utils/prompts.js";
 import { intro, prettifyList } from "../utils/prompt-helpers.js";
 import { resolveImport } from "../utils/resolve-imports.js";
@@ -335,28 +334,6 @@ export async function runInit(cwd: string, config: Config, options: InitOptions)
 					await fs.mkdir(dirname, { recursive: true });
 				}
 			}
-
-			// Write tailwind config.
-			const { TS, JS } = templates.TAILWIND_CONFIG_WITH_VARIABLES;
-			const tailwindConfigContent = config.resolvedPaths.tailwindConfig.endsWith(".ts")
-				? TS
-				: JS;
-			await fs.writeFile(config.resolvedPaths.tailwindConfig, tailwindConfigContent, "utf8");
-
-			// Write css file.
-			const baseColor = await getRegistryBaseColor(config.tailwind.baseColor);
-			if (baseColor) {
-				await fs.writeFile(
-					config.resolvedPaths.tailwindCss,
-					baseColor.cssVarsTemplate,
-					"utf8"
-				);
-			}
-
-			const utilsPath = config.resolvedPaths.utils + (config.typescript ? ".ts" : ".js");
-			const utilsTemplate = config.typescript ? templates.UTILS : templates.UTILS_JS;
-			// Write cn file.
-			await fs.writeFile(utilsPath, utilsTemplate, "utf8");
 
 			return "Project initialized";
 		},

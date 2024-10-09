@@ -7,8 +7,6 @@
     import { cn } from '$lib/utils.js';
     import MailLight from '$lib/img/examples/mail-light.png?enhanced';
     import MailDark from '$lib/img/examples/mail-dark.png?enhanced';
-
-    export let data;
 </script>
 
 <div class="container relative">

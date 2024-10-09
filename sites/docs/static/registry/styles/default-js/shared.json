@@ -1,0 +1,21 @@
+{
+	"name": "shared",
+	"dependencies": [
+		"lucide-svelte"
+	],
+	"registryDependencies": [],
+	"shadcnDependencies": [
+		"sonner"
+	],
+	"files": [
+		{
+			"name": "spinner.svelte",
+			"content": "<script>\n\timport { cn } from \"$lib/utils\";\n\timport LoaderCircle from \"lucide-svelte/icons/loader-circle\";\n\tlet className = undefined;\n\texport { className as class };\n</script>\n\n<LoaderCircle class={cn(\"h-4 w-4 animate-spin\", className)} {...$$restProps} />\n"
+		},
+		{
+			"name": "types.js",
+			"content": "export {};\n"
+		}
+	],
+	"type": "components:actions-ui"
+}

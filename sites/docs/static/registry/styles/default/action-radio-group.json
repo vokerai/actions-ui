@@ -1,0 +1,32 @@
+{
+	"name": "action-radio-group",
+	"dependencies": [
+		"bits-ui",
+		"svelte-sonner",
+		"mode-watcher"
+	],
+	"registryDependencies": [],
+	"shadcnDependencies": [
+		"sonner",
+		"radio-group"
+	],
+	"files": [
+		{
+			"name": "index.ts",
+			"content": "import Root from './root.svelte';\nimport ErrorToast from './toast/toast.svelte';\nimport * as RadioGroup from '$lib/components/ui/radio-group';\n\n// const Root = RadioGroup.Root\nconst Item = RadioGroup.Item;\nconst Input = RadioGroup.Input;\n\nexport { Root, Item, Input, ErrorToast };\n"
+		},
+		{
+			"name": "root.svelte",
+			"content": "<script lang=\"ts\">\n    import * as RadioGroup from '$lib/components/ui/radio-group';\n    import type { ErrorReturn } from '../shared/types';\n    import { createToastErrorCtx } from './toast/context';\n    import { RadioGroup as RadioGroupPrimitive } from 'bits-ui';\n\n    type onValueChangeType = ((value: string) => ErrorReturn) | undefined;\n\n    type $$Props = RadioGroupPrimitive.Props & {\n        onValueChange: onValueChangeType;\n    };\n\n    export let value: $$Props['value'] = undefined;\n    export let onValueChange: onValueChangeType = undefined;\n    export let disabled = false;\n\n    const toastError = createToastErrorCtx();\n\n    const changed = async (newValue: string | undefined) => {\n        if (onValueChange === undefined) {\n            return;\n        }\n\n        if (newValue === undefined) {\n            return;\n        }\n\n        disabled = true;\n        const startingState = value;\n        $toastError = undefined;\n\n        try {\n            const { error } = await onValueChange(newValue);\n\n            if (error === undefined) {\n                return;\n            }\n\n            value = startingState;\n            $toastError = error;\n        } catch {\n            value = startingState;\n            $toastError = 'Error using radio group';\n        } finally {\n            disabled = false;\n        }\n    };\n</script>\n\n<RadioGroup.Root\n    bind:value\n    onValueChange=\"{changed}\"\n    {disabled}\n    {...$$restProps}\n>\n    <slot />\n</RadioGroup.Root>\n"
+		},
+		{
+			"name": "toast/context.ts",
+			"content": "import { getContext, setContext } from 'svelte';\nimport { writable, type Writable } from 'svelte/store';\n\nconst sonnerContextKey = 'actionsui-sonner-error';\n\nexport let createToastErrorCtx = (): Writable<string | undefined> => {\n    const ctx = writable<string | undefined>(undefined);\n    setContext(sonnerContextKey, ctx);\n    return ctx;\n};\n\nexport let getToastErrorCtx = (): Writable<string | undefined> => {\n    return getContext<Writable<string | undefined>>(sonnerContextKey);\n};\n"
+		},
+		{
+			"name": "toast/toast.svelte",
+			"content": "<script lang=\"ts\">\n    import { toast } from 'svelte-sonner';\n    import { getToastErrorCtx } from './context';\n    import { onMount } from 'svelte';\n\n    export let title: string;\n\n    const ctx = getToastErrorCtx();\n\n    const sendToast = (description: string | undefined) => {\n        if (description === undefined) {\n            return;\n        }\n\n        toast.error(title, { description });\n    };\n\n    onMount(() => {\n        ctx.subscribe((description) => {\n            sendToast(description);\n        });\n    });\n</script>\n"
+		}
+	],
+	"type": "components:actions-ui"
+}

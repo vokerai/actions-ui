@@ -1,0 +1,32 @@
+{
+	"name": "action-checkbox",
+	"dependencies": [
+		"bits-ui",
+		"svelte-sonner",
+		"mode-watcher"
+	],
+	"registryDependencies": [],
+	"shadcnDependencies": [
+		"sonner",
+		"checkbox"
+	],
+	"files": [
+		{
+			"name": "index.js",
+			"content": "import Root from \"./root.svelte\";\nimport ErrorToast from \"./toast/toast.svelte\";\nexport { Root, ErrorToast };\n"
+		},
+		{
+			"name": "root.svelte",
+			"content": "<script>\n\timport { Checkbox } from \"$lib/components/ui/checkbox/index.js\";\n\timport { createToastErrorCtx } from \"./toast/context\";\n\timport { Checkbox as CheckBoxPrimitive } from \"bits-ui\";\n\texport let checked = false;\n\texport let onCheckedChange = undefined;\n\texport let disabled = false;\n\tconst toastError = createToastErrorCtx();\n\tconst changed = async (newValue) => {\n\t\tif (onCheckedChange === undefined) {\n\t\t\treturn;\n\t\t}\n\t\tif (newValue === \"indeterminate\") {\n\t\t\treturn;\n\t\t}\n\t\tdisabled = true;\n\t\tconst startingState = checked;\n\t\t$toastError = undefined;\n\t\ttry {\n\t\t\tconst { error } = await onCheckedChange(newValue);\n\t\t\tif (error === undefined) {\n\t\t\t\treturn;\n\t\t\t}\n\t\t\tchecked = startingState;\n\t\t\t$toastError = error;\n\t\t} catch {\n\t\t\tchecked = startingState;\n\t\t\t$toastError = \"Error using checkbox\";\n\t\t} finally {\n\t\t\tdisabled = false;\n\t\t}\n\t};\n</script>\n\n<div>\n\t<Checkbox bind:checked onCheckedChange={changed} {disabled} {...$$restProps} />\n\t<slot />\n</div>\n"
+		},
+		{
+			"name": "toast/context.js",
+			"content": "import { getContext, setContext } from \"svelte\";\nimport { writable } from \"svelte/store\";\nconst sonnerContextKey = \"actionsui-sonner-error\";\nexport let createToastErrorCtx = () => {\n\tconst ctx = writable(undefined);\n\tsetContext(sonnerContextKey, ctx);\n\treturn ctx;\n};\nexport let getToastErrorCtx = () => {\n\treturn getContext(sonnerContextKey);\n};\n"
+		},
+		{
+			"name": "toast/toast.svelte",
+			"content": "<script>\n\timport { toast } from \"svelte-sonner\";\n\timport { getToastErrorCtx } from \"./context\";\n\timport { onMount } from \"svelte\";\n\texport let title;\n\tconst ctx = getToastErrorCtx();\n\tconst sendToast = (description) => {\n\t\tif (description === undefined) {\n\t\t\treturn;\n\t\t}\n\t\ttoast.error(title, { description });\n\t};\n\tonMount(() => {\n\t\tctx.subscribe((description) => {\n\t\t\tsendToast(description);\n\t\t});\n\t});\n</script>\n"
+		}
+	],
+	"type": "components:actions-ui"
+}

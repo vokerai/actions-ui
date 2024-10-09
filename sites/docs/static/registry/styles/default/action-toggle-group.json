@@ -1,0 +1,32 @@
+{
+	"name": "action-toggle-group",
+	"dependencies": [
+		"bits-ui",
+		"svelte-sonner",
+		"mode-watcher"
+	],
+	"registryDependencies": [],
+	"shadcnDependencies": [
+		"sonner",
+		"toggle-group"
+	],
+	"files": [
+		{
+			"name": "index.ts",
+			"content": "import Root from './root.svelte';\nimport * as ToggleGroup from '$lib/components/ui/toggle-group';\nimport ErrorToast from './toast/toast.svelte';\n\nconst Item = ToggleGroup.Item;\n\nexport { Root, Item, ErrorToast };\n"
+		},
+		{
+			"name": "root.svelte",
+			"content": "<script lang=\"ts\">\n    import * as ToggleGroup from '$lib/components/ui/toggle-group';\n    import type { ErrorReturn } from '../shared/types';\n    import { createToastErrorCtx } from './toast/context';\n    import { ToggleGroup as ToggleGroupPrimitive } from 'bits-ui';\n\n    type T = $$Generic<'single' | 'multiple'>;\n    type onValueChangeType =\n        | ((value: string | undefined) => ErrorReturn)\n        | ((value: string[] | undefined) => ErrorReturn)\n        | undefined;\n\n    type $$Props = ToggleGroupPrimitive.Props<T> & {\n        onValueChange: onValueChangeType;\n    };\n    export let value: $$Props['value'] = undefined;\n    export let onValueChange: onValueChangeType = undefined;\n    export let disabled = false;\n\n    const toastError = createToastErrorCtx();\n\n    const changed = async (newValue: string | string[] | undefined) => {\n        if (onValueChange === undefined) {\n            return;\n        }\n\n        disabled = true;\n        const startingState = value === undefined ? [] : structuredClone(value);\n        $toastError = undefined;\n\n        try {\n            const { error } = await onValueChange(newValue);\n\n            if (error === undefined) {\n                return;\n            }\n\n            value = startingState;\n            $toastError = error;\n        } catch {\n            value = startingState;\n            $toastError = 'Error using toggle group';\n        } finally {\n            disabled = false;\n        }\n    };\n</script>\n\n<ToggleGroup.Root\n    bind:value\n    onValueChange=\"{changed}\"\n    {disabled}\n    {...$$restProps}\n>\n    <slot />\n</ToggleGroup.Root>\n"
+		},
+		{
+			"name": "toast/context.ts",
+			"content": "import { getContext, setContext } from 'svelte';\nimport { writable, type Writable } from 'svelte/store';\n\nconst sonnerContextKey = 'actionsui-sonner-error';\n\nexport let createToastErrorCtx = (): Writable<string | undefined> => {\n    const ctx = writable<string | undefined>(undefined);\n    setContext(sonnerContextKey, ctx);\n    return ctx;\n};\n\nexport let getToastErrorCtx = (): Writable<string | undefined> => {\n    return getContext<Writable<string | undefined>>(sonnerContextKey);\n};\n"
+		},
+		{
+			"name": "toast/toast.svelte",
+			"content": "<script lang=\"ts\">\n    import { toast } from 'svelte-sonner';\n    import { getToastErrorCtx } from './context';\n    import { onMount } from 'svelte';\n\n    export let title: string;\n\n    const ctx = getToastErrorCtx();\n\n    const sendToast = (description: string | undefined) => {\n        if (description === undefined) {\n            return;\n        }\n\n        toast.error(title, { description });\n    };\n\n    onMount(() => {\n        ctx.subscribe((description) => {\n            sendToast(description);\n        });\n    });\n</script>\n"
+		}
+	],
+	"type": "components:actions-ui"
+}

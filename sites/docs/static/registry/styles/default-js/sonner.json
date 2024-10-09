@@ -5,15 +5,18 @@
 		"mode-watcher"
 	],
 	"registryDependencies": [],
+	"shadcnDependencies": [
+		"sonner"
+	],
 	"files": [
 		{
-			"name": "index.js",
-			"content": "export { default as Toaster } from \"./sonner.svelte\";\n"
+			"name": "context.js",
+			"content": "import { getContext, setContext } from \"svelte\";\nimport { writable } from \"svelte/store\";\nconst sonnerContextKey = \"actionsui-sonner-error\";\nexport let createToastErrorCtx = () => {\n\tconst ctx = writable(undefined);\n\tsetContext(sonnerContextKey, ctx);\n\treturn ctx;\n};\nexport let getToastErrorCtx = () => {\n\treturn getContext(sonnerContextKey);\n};\n"
 		},
 		{
 			"name": "sonner.svelte",
-			"content": "<script>\n\timport { Toaster as Sonner } from \"svelte-sonner\";\n\timport { mode } from \"mode-watcher\";\n</script>\n\n<Sonner\n\ttheme={$mode}\n\tclass=\"toaster group\"\n\ttoastOptions={{\n\t\tclasses: {\n\t\t\ttoast: \"group toast group-[.toaster]:bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg\",\n\t\t\tdescription: \"group-[.toast]:text-muted-foreground\",\n\t\t\tactionButton: \"group-[.toast]:bg-primary group-[.toast]:text-primary-foreground\",\n\t\t\tcancelButton: \"group-[.toast]:bg-muted group-[.toast]:text-muted-foreground\",\n\t\t},\n\t}}\n\t{...$$restProps}\n/>\n"
+			"content": "<script>\n\timport Sonner from \"$lib/components/ui/sonner/sonner.svelte\";\n\timport { toast } from \"svelte-sonner\";\n\timport { getToastErrorCtx } from \"./context\";\n\timport { getContext, onMount } from \"svelte\";\n\timport { browser } from \"$app/environment\";\n\texport let title;\n\tconst ctx = getToastErrorCtx();\n\tconst sendToast = (description) => {\n\t\tif (description === undefined) {\n\t\t\treturn;\n\t\t}\n\t\ttoast.error(title, { description });\n\t};\n\tonMount(() => {\n\t\tif (ctx !== undefined) {\n\t\t\tctx.subscribe((description) => {\n\t\t\t\tsendToast(description);\n\t\t\t});\n\t\t}\n\t});\n</script>\n\n<Sonner richColors />\n"
 		}
 	],
-	"type": "components:ui"
+	"type": "components:actions-ui"
 }

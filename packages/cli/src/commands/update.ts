@@ -8,7 +8,6 @@ import * as v from "valibot";
 import { type Config, getConfig } from "../utils/get-config.js";
 import { error, handleError } from "../utils/errors.js";
 import { fetchTree, getItemTargetPath, getRegistryIndex, resolveTree } from "../utils/registry";
-import { UTILS, UTILS_JS } from "../utils/templates.js";
 import { transformImports } from "../utils/transformers.js";
 import * as p from "../utils/prompts.js";
 import { intro, prettifyList } from "../utils/prompt-helpers.js";
@@ -100,7 +99,7 @@ async function runUpdate(cwd: string, config: Config, options: UpdateOptions) {
 	// add `utils` option to the end
 	existingComponents.push({
 		name: "utils",
-		type: "components:ui",
+		type: "components:actions-ui",
 		files: [],
 		dependencies: [],
 		registryDependencies: [],
@@ -160,9 +159,6 @@ async function runUpdate(cwd: string, config: Config, options: UpdateOptions) {
 		if (!existsSync(utilsPath)) {
 			throw error(`Failed to find ${highlight("utils")} at ${color.cyan(utilsPath)}`);
 		}
-
-		// utils.(ts|js) is not in the registry, it is a template, so we'll just overwrite it
-		await fs.writeFile(utilsPath, config.typescript ? UTILS : UTILS_JS);
 	}
 
 	const tree = await resolveTree(

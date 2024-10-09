@@ -23,8 +23,8 @@ async function main() {
 	const packageInfo = getPackageInfo();
 
 	const program = new Command()
-		.name("shadcn-svelte")
-		.description("Add shadcn-svelte components to your project")
+		.name("actions-ui")
+		.description("Add actions-ui components to your project")
 		.version(packageInfo.version || "0.0.0", "-v, --version", "display the version number");
 
 	program.addCommand(init).addCommand(add).addCommand(update);

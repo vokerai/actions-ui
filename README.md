@@ -17,7 +17,3 @@ Visit https://voker.ai/docs/actions-ui to view the documentation.
 
 Published under the [MIT](https://github.com/vokerai/actions-ui/blob/main/LICENSE) license.
 Built by [@vokerai](https://github.com/vokerai)
-<br><br>
-<a href="https://github.com/huntabyte/shadcn-svelte/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=huntabyte/shadcn-svelte" />
-</a>

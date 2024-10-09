@@ -1,0 +1,32 @@
+{
+	"name": "action-radio-group",
+	"dependencies": [
+		"bits-ui",
+		"svelte-sonner",
+		"mode-watcher"
+	],
+	"registryDependencies": [],
+	"shadcnDependencies": [
+		"sonner",
+		"radio-group"
+	],
+	"files": [
+		{
+			"name": "index.js",
+			"content": "import Root from \"./root.svelte\";\nimport ErrorToast from \"./toast/toast.svelte\";\nimport * as RadioGroup from \"$lib/components/ui/radio-group\";\n// const Root = RadioGroup.Root\nconst Item = RadioGroup.Item;\nconst Input = RadioGroup.Input;\nexport { Root, Item, Input, ErrorToast };\n"
+		},
+		{
+			"name": "root.svelte",
+			"content": "<script>\n\timport * as RadioGroup from \"$lib/components/ui/radio-group\";\n\timport { createToastErrorCtx } from \"./toast/context\";\n\timport { RadioGroup as RadioGroupPrimitive } from \"bits-ui\";\n\texport let value = undefined;\n\texport let onValueChange = undefined;\n\texport let disabled = false;\n\tconst toastError = createToastErrorCtx();\n\tconst changed = async (newValue) => {\n\t\tif (onValueChange === undefined) {\n\t\t\treturn;\n\t\t}\n\t\tif (newValue === undefined) {\n\t\t\treturn;\n\t\t}\n\t\tdisabled = true;\n\t\tconst startingState = value;\n\t\t$toastError = undefined;\n\t\ttry {\n\t\t\tconst { error } = await onValueChange(newValue);\n\t\t\tif (error === undefined) {\n\t\t\t\treturn;\n\t\t\t}\n\t\t\tvalue = startingState;\n\t\t\t$toastError = error;\n\t\t} catch {\n\t\t\tvalue = startingState;\n\t\t\t$toastError = \"Error using radio group\";\n\t\t} finally {\n\t\t\tdisabled = false;\n\t\t}\n\t};\n</script>\n\n<RadioGroup.Root bind:value onValueChange={changed} {disabled} {...$$restProps}>\n\t<slot />\n</RadioGroup.Root>\n"
+		},
+		{
+			"name": "toast/context.js",
+			"content": "import { getContext, setContext } from \"svelte\";\nimport { writable } from \"svelte/store\";\nconst sonnerContextKey = \"actionsui-sonner-error\";\nexport let createToastErrorCtx = () => {\n\tconst ctx = writable(undefined);\n\tsetContext(sonnerContextKey, ctx);\n\treturn ctx;\n};\nexport let getToastErrorCtx = () => {\n\treturn getContext(sonnerContextKey);\n};\n"
+		},
+		{
+			"name": "toast/toast.svelte",
+			"content": "<script>\n\timport { toast } from \"svelte-sonner\";\n\timport { getToastErrorCtx } from \"./context\";\n\timport { onMount } from \"svelte\";\n\texport let title;\n\tconst ctx = getToastErrorCtx();\n\tconst sendToast = (description) => {\n\t\tif (description === undefined) {\n\t\t\treturn;\n\t\t}\n\t\ttoast.error(title, { description });\n\t};\n\tonMount(() => {\n\t\tctx.subscribe((description) => {\n\t\t\tsendToast(description);\n\t\t});\n\t});\n</script>\n"
+		}
+	],
+	"type": "components:actions-ui"
+}

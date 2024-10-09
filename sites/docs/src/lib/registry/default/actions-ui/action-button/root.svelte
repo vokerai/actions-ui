@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Button, ButtonProps } from '$lib/components/ui/button';
+    import { Button, type ButtonProps } from '$lib/components/ui/button';
     import { cn } from '$lib/utils';
     import { createToastErrorCtx } from './toast/context';
     import { createLoadingCtx } from './context';
@@ -14,9 +14,9 @@
     let className: $$Props['class'] = undefined;
     export { className as class };
 
-    export let onClick: onClickType = undefined;
+    export let onClick: onClickType | undefined = undefined;
 
-    // HOW TO ALLOW THIS AS AN INPUT???
+    // TODO: HOW TO ALLOW THIS AS AN INPUT???
     const disabled = createLoadingCtx();
     const toastError = createToastErrorCtx();
 

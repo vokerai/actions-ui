@@ -39,14 +39,7 @@ bits: https://www.bits-ui.com/docs/components/switch
 </script>
 
 <ActionSwitch.Root>
-    <ActionSwitch.Trigger class="w-[180px]">
-        <ActionSwitch.Value placeholder="Theme" />
-    </ActionSwitch.Trigger>
-    <ActionSwitch.Content>
-        <ActionSwitch.Item value="light">Light</ActionSwitch.Item>
-        <ActionSwitch.Item value="dark">Dark</ActionSwitch.Item>
-        <ActionSwitch.Item value="system">System</ActionSwitch.Item>
-    </ActionSwitch.Content>
+    <ActionSwitch.ErrorToast title="Could not save switch" />
 </ActionSwitch.Root>
 ```
 

@@ -1,0 +1,47 @@
+{
+	"name": "action-button",
+	"dependencies": [
+		"svelte-sonner",
+		"mode-watcher"
+	],
+	"registryDependencies": [],
+	"shadcnDependencies": [
+		"sonner",
+		"button"
+	],
+	"files": [
+		{
+			"name": "content.svelte",
+			"content": "<script lang=\"ts\">\n    import { cn } from '$lib/utils';\n    import { getLoadingCtx } from './context';\n\n    let className: string | undefined = undefined;\n    export { className as class };\n\n    const loading = getLoadingCtx();\n</script>\n\n<div class=\"{cn($loading ? 'hidden' : '', className)}\" {...$$restProps}>\n    <slot />\n</div>\n"
+		},
+		{
+			"name": "context.ts",
+			"content": "import { getContext, setContext } from 'svelte';\nimport { type Writable, writable } from 'svelte/store';\n\nconst loadingKey = 'button-loading';\n\nexport const createLoadingCtx = (\n    initialValue: boolean = false,\n): Writable<boolean> => {\n    const loading = writable(initialValue);\n    setContext(loadingKey, loading);\n    return loading;\n};\n\nexport const getLoadingCtx = (): Writable<boolean> => {\n    return getContext<Writable<boolean>>(loadingKey);\n};\n"
+		},
+		{
+			"name": "index.ts",
+			"content": "import Content from './content.svelte';\nimport Loading from './loading.svelte';\nimport Root from './root.svelte';\nimport Spinner from './spinner.svelte';\nimport ErrorToast from './toast/toast.svelte';\n\nexport { Content, Loading, Root, Spinner, ErrorToast };\n"
+		},
+		{
+			"name": "loading.svelte",
+			"content": "<script lang=\"ts\">\n    import { cn } from '$lib/utils';\n    import { getLoadingCtx } from './context';\n\n    let className: string | undefined = undefined;\n    export { className as class };\n\n    const loading = getLoadingCtx();\n</script>\n\n<div class=\"{cn($loading ? '' : 'hidden', className)}\" {...$$restProps}>\n    <slot />\n</div>\n"
+		},
+		{
+			"name": "root.svelte",
+			"content": "<script lang=\"ts\">\n    import { Button, ButtonProps } from '$lib/components/ui/button';\n    import { cn } from '$lib/utils';\n    import { createToastErrorCtx } from './toast/context';\n    import { createLoadingCtx } from './context';\n    import type { ErrorReturn } from '../shared/types';\n\n    type onClickType = () => ErrorReturn;\n\n    type $$Props = ButtonProps & {\n        onClick: onClickType;\n    };\n\n    let className: $$Props['class'] = undefined;\n    export { className as class };\n\n    export let onClick: onClickType = undefined;\n\n    // HOW TO ALLOW THIS AS AN INPUT???\n    const disabled = createLoadingCtx();\n    const toastError = createToastErrorCtx();\n\n    const click = async () => {\n        if (onClick === undefined) {\n            return;\n        }\n\n        $disabled = true;\n        $toastError = undefined;\n\n        try {\n            const { error } = await onClick();\n\n            if (error === undefined) {\n                return;\n            }\n\n            $toastError = error;\n        } catch {\n            $toastError = 'Error using button';\n        } finally {\n            $disabled = false;\n        }\n    };\n</script>\n\n<Button\n    class=\"{cn('flex select-none items-center space-x-1', className)}\"\n    on:click=\"{click}\"\n    disabled=\"{$disabled}\"\n    {...$$restProps}\n>\n    <slot />\n</Button>\n"
+		},
+		{
+			"name": "spinner.svelte",
+			"content": "<script lang=\"ts\">\n    import { cn } from '$lib/utils';\n    import { getLoadingCtx } from './context';\n    import Spinner from '../shared/spinner.svelte';\n\n    let className: string | undefined = undefined;\n    export { className as class };\n\n    const loading = getLoadingCtx();\n</script>\n\n<Spinner class=\"{cn($loading ? '' : 'hidden', className)}\" {...$$restProps} />\n"
+		},
+		{
+			"name": "toast/context.ts",
+			"content": "import { getContext, setContext } from 'svelte';\nimport { writable, type Writable } from 'svelte/store';\n\nconst toastContextErrorKey = 'actionsui-sonner-error';\n\nexport let createToastErrorCtx = (): Writable<string | undefined> => {\n    const ctx = writable<string | undefined>(undefined);\n    setContext(toastContextErrorKey, ctx);\n    return ctx;\n};\n\nexport let getToastErrorCtx = (): Writable<string | undefined> => {\n    return getContext<Writable<string | undefined>>(toastContextErrorKey);\n};\n"
+		},
+		{
+			"name": "toast/toast.svelte",
+			"content": "<script lang=\"ts\">\n    import { toast } from 'svelte-sonner';\n    import { getToastErrorCtx } from './context.js';\n    import { onMount } from 'svelte';\n\n    export let title: string;\n\n    const ctx = getToastErrorCtx();\n\n    const sendToast = (description: string | undefined) => {\n        if (description === undefined) {\n            return;\n        }\n\n        toast.error(title, { description });\n    };\n\n    onMount(() => {\n        ctx.subscribe((description) => {\n            sendToast(description);\n        });\n    });\n</script>\n"
+		}
+	],
+	"type": "components:actions-ui"
+}

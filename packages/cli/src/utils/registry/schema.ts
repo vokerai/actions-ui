@@ -4,8 +4,9 @@ export const registryItemSchema = v.object({
 	name: v.string(),
 	dependencies: v.array(v.string()),
 	registryDependencies: v.array(v.string()),
+	shadcnDependencies: v.array(v.string()),
 	files: v.array(v.string()),
-	type: v.picklist(["components:ui", "components:component", "components:example"]),
+	type: v.picklist(["components:actions-ui", "components:component", "components:example"]),
 });
 
 export const registryIndexSchema = v.array(registryItemSchema);

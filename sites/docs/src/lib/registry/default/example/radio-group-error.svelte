@@ -11,7 +11,7 @@
     };
 </script>
 
-<ActionRadioGroup.Root {onValueChange}>
+<ActionRadioGroup.Root {onValueChange} value="comfortable">
     <div class="flex items-center space-x-2">
         <ActionRadioGroup.Item value="default" id="r1" />
         <Label for="r1">Default</Label>

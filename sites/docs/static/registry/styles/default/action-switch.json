@@ -1,0 +1,32 @@
+{
+	"name": "action-switch",
+	"dependencies": [
+		"bits-ui",
+		"svelte-sonner",
+		"mode-watcher"
+	],
+	"registryDependencies": [],
+	"shadcnDependencies": [
+		"sonner",
+		"switch"
+	],
+	"files": [
+		{
+			"name": "index.ts",
+			"content": "import Root from './root.svelte';\nimport ErrorToast from './toast/toast.svelte';\n\nexport { Root, ErrorToast };\n"
+		},
+		{
+			"name": "root.svelte",
+			"content": "<script lang=\"ts\">\n    import { Switch } from '$lib/components/ui/switch';\n    import type { ErrorReturn } from '../shared/types';\n    import { createToastErrorCtx } from './toast/context';\n    import { Switch as SwitchPrimitive } from 'bits-ui';\n\n    type onCheckedChangeType = ((value: boolean) => ErrorReturn) | undefined;\n\n    type $$Props = SwitchPrimitive.Props & {\n        onCheckedChange: onCheckedChangeType;\n    };\n\n    export let checked: $$Props['checked'] = false;\n    export let onCheckedChange: onCheckedChangeType = undefined;\n    export let disabled = false;\n\n    const toastError = createToastErrorCtx();\n\n    const changed = async (newValue: boolean | 'indeterminate') => {\n        if (onCheckedChange === undefined) {\n            return;\n        }\n\n        if (newValue === 'indeterminate') {\n            return;\n        }\n\n        disabled = true;\n        const startingState = checked;\n        $toastError = undefined;\n\n        try {\n            const { error } = await onCheckedChange(newValue);\n\n            if (error === undefined) {\n                return;\n            }\n\n            checked = startingState;\n            $toastError = error;\n        } catch {\n            checked = startingState;\n            $toastError = 'Error using switch';\n        } finally {\n            disabled = false;\n        }\n    };\n</script>\n\n<div>\n    <Switch\n        bind:checked\n        onCheckedChange=\"{changed}\"\n        {disabled}\n        {...$$restProps}\n    />\n    <slot />\n</div>\n"
+		},
+		{
+			"name": "toast/context.ts",
+			"content": "import { getContext, setContext } from 'svelte';\nimport { writable, type Writable } from 'svelte/store';\n\nconst sonnerContextKey = 'actionsui-sonner-error';\n\nexport let createToastErrorCtx = (): Writable<string | undefined> => {\n    const ctx = writable<string | undefined>(undefined);\n    setContext(sonnerContextKey, ctx);\n    return ctx;\n};\n\nexport let getToastErrorCtx = (): Writable<string | undefined> => {\n    return getContext<Writable<string | undefined>>(sonnerContextKey);\n};\n"
+		},
+		{
+			"name": "toast/toast.svelte",
+			"content": "<script lang=\"ts\">\n    import { toast } from 'svelte-sonner';\n    import { getToastErrorCtx } from './context';\n    import { onMount } from 'svelte';\n\n    export let title: string;\n\n    const ctx = getToastErrorCtx();\n\n    const sendToast = (description: string | undefined) => {\n        if (description === undefined) {\n            return;\n        }\n\n        toast.error(title, { description });\n    };\n\n    onMount(() => {\n        ctx.subscribe((description) => {\n            sendToast(description);\n        });\n    });\n</script>\n"
+		}
+	],
+	"type": "components:actions-ui"
+}

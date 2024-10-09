@@ -5,15 +5,18 @@
 		"mode-watcher"
 	],
 	"registryDependencies": [],
+	"shadcnDependencies": [
+		"sonner"
+	],
 	"files": [
 		{
-			"name": "index.ts",
-			"content": "export { default as Toaster } from \"./sonner.svelte\";\n"
+			"name": "context.ts",
+			"content": "import { getContext, setContext } from 'svelte';\nimport { writable, type Writable } from 'svelte/store';\n\nconst sonnerContextKey = 'actionsui-sonner-error';\n\nexport let createToastErrorCtx = (): Writable<string | undefined> => {\n    const ctx = writable<string | undefined>(undefined);\n    setContext(sonnerContextKey, ctx);\n    return ctx;\n};\n\nexport let getToastErrorCtx = (): Writable<string | undefined> => {\n    return getContext<Writable<string | undefined>>(sonnerContextKey);\n};\n"
 		},
 		{
 			"name": "sonner.svelte",
-			"content": "<script lang=\"ts\">\n\timport { Toaster as Sonner, type ToasterProps as SonnerProps } from \"svelte-sonner\";\n\timport { mode } from \"mode-watcher\";\n\n\ttype $$Props = SonnerProps;\n</script>\n\n<Sonner\n\ttheme={$mode}\n\tclass=\"toaster group\"\n\ttoastOptions={{\n\t\tclasses: {\n\t\t\ttoast: \"group toast group-[.toaster]:bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg\",\n\t\t\tdescription: \"group-[.toast]:text-muted-foreground\",\n\t\t\tactionButton: \"group-[.toast]:bg-primary group-[.toast]:text-primary-foreground\",\n\t\t\tcancelButton: \"group-[.toast]:bg-muted group-[.toast]:text-muted-foreground\",\n\t\t},\n\t}}\n\t{...$$restProps}\n/>\n"
+			"content": "<script lang=\"ts\">\n    import Sonner from '$lib/components/ui/sonner/sonner.svelte';\n    import { toast } from 'svelte-sonner';\n    import { getToastErrorCtx } from './context';\n    import { getContext, onMount } from 'svelte';\n    import { browser } from '$app/environment';\n\n    export let title: string;\n\n    const ctx = getToastErrorCtx();\n\n    const sendToast = (description: string | undefined) => {\n        if (description === undefined) {\n            return;\n        }\n\n        toast.error(title, { description });\n    };\n\n    onMount(() => {\n        if (ctx !== undefined) {\n            ctx.subscribe((description) => {\n                sendToast(description);\n            });\n        }\n    });\n</script>\n\n<Sonner richColors />\n"
 		}
 	],
-	"type": "components:ui"
+	"type": "components:actions-ui"
 }

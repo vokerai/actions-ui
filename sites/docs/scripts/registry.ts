@@ -1,5 +1,5 @@
 import fs from 'node:fs';
-import path from 'node:path';
+import path, { dirname } from 'node:path';
 import { parse, preprocess, walk } from 'svelte/compiler';
 import { type Registry, styles } from '../src/lib/registry';
 import config from '../svelte.config.js';
@@ -21,7 +21,7 @@ const REQUIRED_COMPONENT_DEPS = new Map<string, string[]>([
     ['calendar', ['@internationalized/date']],
     ['range-calendar', ['@internationalized/date']],
 ]);
-const REGISTRY_DEPENDENCY = '$lib/';
+const REGISTRY_DEPENDENCY = '$lib/components/actions-ui';
 const UTILS_PATH = '$lib/utils.js';
 
 type ArrayItem<T> = T extends Array<infer X> ? X : never;
@@ -32,7 +32,7 @@ export async function buildRegistry() {
     const registry: Registry = [];
 
     for (const { name: style } of styles) {
-        const uiPath = path.resolve(registryRootPath, style, 'ui');
+        const uiPath = path.resolve(registryRootPath, style, 'actions-ui');
         const examplePath = path.resolve(registryRootPath, style, 'example');
         const blockPath = path.resolve(registryRootPath, style, 'block');
 
@@ -59,7 +59,16 @@ async function crawlUI(rootPath: string, style: string) {
     for (const dirent of dir) {
         if (!dirent.isDirectory()) continue;
 
+        if (['tests'].includes(dirent.name)) {
+            continue;
+        }
+
         const componentPath = path.resolve(rootPath, dirent.name);
+
+        if (componentPath.includes('/default/actions-ui/toast')) {
+            continue;
+        }
+
         const ui = await buildUIRegistry(componentPath, dirent.name, style);
         uiRegistry.push(ui);
     }
@@ -74,24 +83,49 @@ async function buildUIRegistry(
 ) {
     const dir = fs.readdirSync(componentPath, {
         withFileTypes: true,
+        recursive: true,
     });
 
     const files = [];
     const dependencies = new Set<string>();
     const registryDependencies = new Set<string>();
-    const type = 'components:ui';
+    const shadcnDependencies = new Set<string>();
+    const type = 'components:actions-ui';
 
     for (const dirent of dir) {
-        if (!dirent.isFile()) continue;
+        if (!dirent.isFile()) {
+            continue;
+        }
 
-        const filepath = path.join(componentPath, dirent.name);
-        const relativePath = path.join('ui', componentName, dirent.name);
+        if (dirent.path.endsWith('tests')) {
+            continue;
+        }
+
+        const relpath =
+            dirent.path.substring(
+                dirent.path.lastIndexOf('actions-ui/') + 'actions-ui/'.length,
+            ) +
+            '/' +
+            dirent.name;
+
+        const relpathMinusComponent = relpath.replace(componentName + '/', '');
+
+        const filepath = path.join(componentPath, relpathMinusComponent);
+        const relativePath = path.join('actions-ui', relpath);
+
         const source = fs.readFileSync(filepath, { encoding: 'utf8' });
 
-        files.push({ name: dirent.name, content: source, path: relativePath });
+        files.push({
+            name: relpathMinusComponent,
+            content: source,
+            path: relativePath,
+        });
 
         // only grab deps from the svelte files
-        if (!dirent.name.endsWith('.svelte')) continue;
+        if (!relpath.endsWith('.svelte')) {
+            continue;
+        }
+
         const deps = await getDependencies(filepath, source);
 
         deps.dependencies.forEach((dep) => dependencies.add(dep));
@@ -102,6 +136,10 @@ async function buildUIRegistry(
         deps.registryDependencies.forEach((dep) =>
             registryDependencies.add(dep),
         );
+
+        deps.shadcnDependencies.forEach((dep) => {
+            shadcnDependencies.add(dep);
+        });
     }
 
     return {
@@ -110,6 +148,7 @@ async function buildUIRegistry(
         files,
         name: componentName,
         registryDependencies: Array.from(registryDependencies),
+        shadcnDependencies: Array.from(shadcnDependencies),
         dependencies: Array.from(dependencies),
     } satisfies RegistryItem;
 }
@@ -137,10 +176,8 @@ async function crawlDemo(
         const relativePath = path.join(demoType, dirent.name);
 
         const file = { name: dirent.name, content: source, path: relativePath };
-        const { dependencies, registryDependencies } = await getDependencies(
-            filepath,
-            source,
-        );
+        const { dependencies, registryDependencies, shadcnDependencies } =
+            await getDependencies(filepath, source);
 
         registry.push({
             name,
@@ -148,6 +185,7 @@ async function crawlDemo(
             style,
             files: [file],
             registryDependencies: Array.from(registryDependencies),
+            shadcnDependencies: Array.from(shadcnDependencies),
             dependencies: Array.from(dependencies),
         });
     }
@@ -161,6 +199,7 @@ async function getDependencies(filename: string, source: string) {
 
     const registryDependencies = new Set<string>();
     const dependencies = new Set<string>();
+    const shadcnDependencies = new Set<string>(['sonner']);
 
     // @ts-expect-error annoying
     walk(ast.instance, {
@@ -175,6 +214,13 @@ async function getDependencies(filename: string, source: string) {
                 }
 
                 if (
+                    source.startsWith('$lib/components/ui') &&
+                    source !== UTILS_PATH
+                ) {
+                    shadcnDependencies.add(
+                        source.replace('$lib/components/ui/', '').split('/')[0],
+                    );
+                } else if (
                     source.startsWith(REGISTRY_DEPENDENCY) &&
                     source !== UTILS_PATH
                 ) {
@@ -192,5 +238,5 @@ async function getDependencies(filename: string, source: string) {
         },
     });
 
-    return { registryDependencies, dependencies };
+    return { registryDependencies, dependencies, shadcnDependencies };
 }
